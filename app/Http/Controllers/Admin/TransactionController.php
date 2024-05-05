@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Seller;
 use App\Models\Transaction;
+use App\Notifications\CreateTransaction;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -40,7 +41,8 @@ class TransactionController extends Controller
             'status' => 'required|max:50',
         ]);
 
-        Transaction::create([
+        $user = Seller::where('id', $request->seller_id)->first();
+        $transaction = Transaction::create([
             'seller_id' => $request->seller_id,
             'payment_method' => $request->payment_method,
             'account_number' => $request->account_number,
@@ -48,7 +50,7 @@ class TransactionController extends Controller
             'status' => $request->status,
             'admin_id' => auth()->guard('admin')->user()->id,
         ]);
-
+        $user->notify(new CreateTransaction($transaction->amount, $transaction->status, $transaction->payment_method, $transaction->account_number));
         return redirect()->route('transactions.index')->with(['Add' => 'Add Transaction Successfully']);
     }
 

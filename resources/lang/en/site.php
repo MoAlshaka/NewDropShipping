@@ -185,6 +185,7 @@ return [
     'CreateTransaction' => 'Create Transaction',
     'SelectSeller' => 'Select Seller',
     'AllTransaction' => 'All Transaction',
+    'DateTransaction' => 'Date Transaction',
 
 
 ];

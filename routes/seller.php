@@ -10,6 +10,7 @@ use App\Http\Controllers\Seller\DashboardController;
 use App\Http\Controllers\Seller\ImportProductController;
 use App\Http\Controllers\Seller\SharedProductController;
 use App\Http\Controllers\Seller\AffiliateProductController;
+use App\Http\Controllers\Seller\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,6 +67,9 @@ Route::group(['middleware' => ['lang']], function () {
             Route::match(['post', 'put', 'patch'], 'profile/update/{id}', [ProfileController::class, 'update_profile'])->name('seller.update.profile');
             Route::get('edit-password', [ProfileController::class, 'edit_password'])->name('seller.edit.password');
             Route::match(['post', 'put', 'patch'], 'update-password/{id}', [ProfileController::class, 'change_password'])->name('seller.change.password');
+            //transaction
+            Route::get('transactions', [TransactionController::class, 'index'])->name('seller.transactions.index');
+            Route::get('transaction/{id}', [TransactionController::class, 'show'])->name('seller.transactions.show');
             // error
             Route::fallback([ErrorController::class, 'error'])->name('admin.error');
         });
