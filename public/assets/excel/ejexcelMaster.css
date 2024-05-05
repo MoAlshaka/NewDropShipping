@@ -1,0 +1,96 @@
+.excel_container {
+    /* max-width: 760px; */
+    overflow-x: scroll;
+}
+
+#spreadsheet {
+    overscroll-behavior: contain;
+}
+
+#customPopup {
+    width: 400px;
+    height: 250px;
+    border-radius: 36px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 9999999999;
+}
+
+.x-error {
+    background-color: transparent;
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    padding: 10px;
+    border: 4px solid #f27474;
+}
+
+.x-error span {
+    font-size: 2rem;
+    font-family: sans-serif;
+    color: #f27474;
+    position: absolute;
+    top: 0;
+    transform: translate(20%, -10%);
+}
+
+#customPopup h3 {
+    font-size: 1.9em;
+    margin: 0px;
+    max-width: 16em;
+    line-height: 1.47;
+    font-weight: 500;
+    color: #828393;
+}
+
+#popupContent {
+    margin: 5px 0px;
+    padding: 0;
+    overflow: auto;
+    color: inherit;
+    font-size: 1.125em;
+    font-weight: normal;
+    line-height: normal;
+    text-align: center;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+#addRow {
+    margin: 10px;
+}
+
+#overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999999999;
+}
+
+#closePopup {
+    color: #fff;
+    background-color: #666cff;
+    border-color: #666cff;
+    cursor: pointer;
+    padding: 8px 22px;
+    border-radius: 0.5rem;
+    border: none;
+    box-shadow: 0px 1px 5px #00000070;
+    font-size: 1.2rem;
+    margin-top: 35px;
+}
