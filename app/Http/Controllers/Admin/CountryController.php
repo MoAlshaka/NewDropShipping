@@ -80,12 +80,12 @@ class CountryController extends Controller
         if ($request->hasFile('flag')) {
 
             if ($oldFlag) {
-                unlink(public_path('countries/flags/' . $oldFlag));
+                unlink(public_path('assets/countries/flags/' . $oldFlag));
             }
 
             $flag = $request->file('flag');
             $flagName = uniqid() . '.' . $flag->getClientOriginalExtension();
-            $flag->move(public_path('countries/flags'), $flagName);
+            $flag->move(public_path('assets/countries/flags'), $flagName);
         } else {
             $flagName = $oldFlag;
         }
@@ -108,6 +108,7 @@ class CountryController extends Controller
     {
         try {
             $country = Country::findorfail($id);
+            unlink(public_path('assets/countries/flags/' . $country->image));
             $country->delete();
             return redirect()->route('countries.index')->with(['Delete' => 'Delete successfully']);
         } catch (\Exception $e) {

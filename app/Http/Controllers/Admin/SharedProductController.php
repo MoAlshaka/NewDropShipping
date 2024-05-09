@@ -183,7 +183,7 @@ class SharedProductController extends Controller
             'admin_id' => auth()->guard('admin')->user()->id,
         ]);
 
-
+        $product->sharedcountries()->detach();
         foreach ($request->country as $index => $countryId) {
             $product->sharedcountries()->attach($countryId, ['stock' => $request->stock[$index]]);
         }
@@ -215,7 +215,7 @@ class SharedProductController extends Controller
         // Now you can use the $selectedCountry variable to filter your products
         $products = SharedProduct::whereHas('sharedcountries', function ($query) use ($country) {
             $query->where('country_id', $country);
-        })->get();
+        })->orderBy('id', 'DESC')->paginate(COUNT);
         $countries = Country::all();
         return view('admin.sharedproduct.index', compact('products', 'countries'));
     }

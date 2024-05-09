@@ -20,14 +20,17 @@ document.querySelector('[type="submit"]').addEventListener('click', (event) => {
     formData.append('description', document.querySelector('[data-placeholder="Product Description"]').innerText);
     formData.append('minimum_selling_price', document.querySelector('[name="minimum_selling_price"]').value);
     formData.append('comission', document.querySelector('[name="comission"]').value);
-    formData.append('stock', document.querySelector('[name="stock"]').value);
     formData.append('weight', document.querySelector('[name="weight"]').value);
     formData.append('category_id', document.querySelector('#category-org').selectedOptions[0].value);
 
+    document.querySelectorAll('#Stock').forEach(element => {
+        formData.append('stock[]', Number(element.value));
+        return
+    });
     // Get selected countries
-    const selectedCountries = document.querySelector("#select2Primary").selectedOptions;
-    selectedCountries.forEach(country => {
-        formData.append('country[]', country.value);
+    const selectedCountries = document.querySelectorAll(".country")
+    selectedCountries.forEach(countryField => {
+        formData.append('country[]', countryField.selectedOptions[0].value);
     });
 
     // Get image file

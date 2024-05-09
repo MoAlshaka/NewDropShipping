@@ -15,7 +15,6 @@ $(function () {
             select2Focus($this);
             $this.wrap('<div class="position-relative"></div>');
             $this.select2({
-                placeholder: 'Select an country',
                 dropdownParent: $this.parent()
             });
         });

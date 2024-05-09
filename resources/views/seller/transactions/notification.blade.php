@@ -1,5 +1,4 @@
-<!doctype html>
-
+<!DOCTYPE html>
 <html lang="en" class="light-style layout-wide customizer-hide" dir="ltr" data-theme="theme-default"
     data-assets-path="../../assets/" data-template="vertical-menu-template">
 
@@ -8,7 +7,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>{{ __('site.AdminLogin') }}</title>
+    <title> {{ __('site.Notification') }}</title>
 
     <meta name="description" content="" />
 
@@ -37,8 +36,6 @@
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}" />
-    <!-- Vendor -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/@form-validation/form-validation.css') }}" />
 
     <!-- Page CSS -->
     <!-- Page -->
@@ -55,11 +52,9 @@
 
 <body>
     <!-- Content -->
-
     <div class="position-relative">
         <div class="authentication-wrapper authentication-basic container-p-y">
             <div class="authentication-inner py-4">
-                <!-- Login -->
                 <div class="card p-2">
                     <!-- Logo -->
                     <div class="app-brand justify-content-center mt-5">
@@ -101,64 +96,44 @@
                                     </svg>
                                 </span>
                             </span>
-                            <span class="app-brand-text demo text-heading fw-bold">Dropshipping</span>
+                            <span class="app-brand-text demo text-heading fw-bold"> Dropshipping</span>
                         </a>
                     </div>
                     <!-- /Logo -->
 
+                    <!-- Verify Email -->
+                    @php
+
+                        $notification->data = json_decode($notification->data);
+
+                    @endphp
                     <div class="card-body mt-2">
-                        <h4 class="mb-2">{{ __('site.Welcome') }}👋</h4>
-                        <p class="mb-4">{{ __('site.MessageLogin') }}</p>
-                        @if (session()->has('error'))
-                            <div role="alert">
-                                <span class="text-danger">{{ session()->get('error') }}</span>
-                            </div>
-                        @endif
-                        <form id="formAuthentication" class="mb-3" action="{{ route('admin.login') }}"
-                            method="POST">
-                            @csrf
-                            <div class="form-floating form-floating-outline mb-3">
-                                <input type="text" class="form-control" id="username" name="username"
-                                    placeholder="Enter your Username" autofocus />
-                                <label for="username">{{ __('site.UserName') }}</label>
-                            </div>
-                            @error('username')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <div class="mb-3">
-                                <div class="form-password-toggle">
-                                    <div class="input-group input-group-merge">
-                                        <div class="form-floating form-floating-outline">
-                                            <input type="password" id="password" class="form-control"
-                                                name="password"
-                                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                                aria-describedby="password" />
-                                            <label for="password">{{ __('site.Password') }}</label>
-                                        </div>
-                                        <span class="input-group-text cursor-pointer"><i
-                                                class="mdi mdi-eye-off-outline"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                            @error('password')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <div class="mb-3">
-                                <button class="btn btn-primary d-grid w-100"
-                                    type="submit">{{ __('site.Signin') }}</button>
-                            </div>
-                        </form>
-
-
+                        <h4 class="mb-2"> {{ __('site.Notification') }} ✉️</h4>
+                        <div class="d-flex flex-column flex-grow-1 overflow-hidden w-px-200">
+                            <h6 class="mb-1 text-truncate">Transaction </h6>
+                            <p class="text-body">An amount of money has been
+                                transferred to the account {{ $notification->data->account_number }}
+                                is
+                                {{ $notification->data->amount }} via
+                                {{ $notification->data->payment_method }} its
+                                status is {{ $notification->data->status }}</p>
+                        </div>
+                        <div class="flex-shrink-0 dropdown-notifications-actions">
+                            <small class="text-muted">{{ $notification->created_at }}</small>
+                        </div>
+                        <a class="btn btn-primary w-100 my-3" href="{{ route('seller.dashboard') }}">
+                            {{ __('site.Dashboard') }} </a>
+                        <a class="btn btn-primary w-100 my-3" href="{{ route('seller.transactions.index') }}">
+                            {{ __('site.Transactions') }} </a>
 
 
                     </div>
                 </div>
-                <!-- /Login -->
                 <img alt="mask" src="{{ asset('assets/img/illustrations/auth-basic-login-mask-light.png') }}"
                     class="authentication-image d-none d-lg-block"
                     data-app-light-img="illustrations/auth-basic-login-mask-light.png"
                     data-app-dark-img="illustrations/auth-basic-login-mask-dark.png" />
+                <!-- /Verify Email -->
             </div>
         </div>
     </div>
@@ -180,15 +155,11 @@
     <!-- endbuild -->
 
     <!-- Vendors JS -->
-    {{-- <script src="{{ asset('assets/vendor/libs/@form-validation/popular.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/@form-validation/bootstrap5.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/@form-validation/auto-focus.js') }}"></script> --}}
 
     <!-- Main JS -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
 
     <!-- Page JS -->
-    <script src="{{ asset('assets/js/pages-auth.js') }}"></script>
 </body>
 
 </html>

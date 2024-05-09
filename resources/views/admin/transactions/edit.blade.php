@@ -59,13 +59,11 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="seller">{{ __('site.Sellers') }}</label>
                                 <div class="col-sm-10">
-                                    <select id="seller" class="select2 form-select form-select-lg"
-                                        data-allow-clear="true" name="seller_id">
-                                        <option value="{{ $transaction->seller_id }}">
-                                            {{ $transaction->seller->first_name . ' ' . $transaction->seller->last_name }}
-                                        </option>
+                                    <select id="sellerId" class="form-select form-select-lg" data-allow-clear="true"
+                                        name="seller_id">
                                         @foreach ($sellers as $seller)
-                                            <option value="{{ $seller->id }}">
+                                            <option value="{{ $seller->id }}"
+                                                @if ($seller->id == $transaction->seller_id) selected @endif>
                                                 {{ $seller->first_name . ' ' . $seller->last_name }}</option>
                                         @endforeach
                                     </select>
@@ -81,7 +79,7 @@
                                 <label class="col-sm-2 col-form-label" for="basic-default-name">
                                     {{ __('site.PaymentMethod') }}</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="basic-default-name" name="payment_method"
+                                    <input type="text" class="form-control" id="paymentMethod" name="payment_method"
                                         placeholder="{{ __('site.PaymentMethod') }}"
                                         value="{{ $transaction->payment_method }}" />
                                 </div>
@@ -94,7 +92,7 @@
                                 <label class="col-sm-2 col-form-label" for="basic-default-name">
                                     {{ __('site.AccountNumber') }}</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="basic-default-name" name="account_number"
+                                    <input type="text" class="form-control" id="accountNumber" name="account_number"
                                         placeholder="{{ __('site.AccountNumber') }}"
                                         value="{{ $transaction->account_number }}" />
                                 </div>
@@ -179,4 +177,31 @@
     <!-- Page JS -->
     <script src="{{ asset('assets/js/app-logistics-dashboard.js') }}"></script>
     <script src="{{ asset('assets/js/forms-selects.js') }}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const sellerOptionId = document.getElementById('sellerId');
+            const accountNumber = document.getElementById('accountNumber');
+            const paymentMethod = document.getElementById('paymentMethod');
+
+            sellerOptionId.addEventListener('change', function() {
+                const sellerId = this.value;
+                console.log(sellerId);
+                // document.getElementById('price').value = sellerId;
+                try {
+                    fetch(`/admin/transaction/seller/${sellerId}`).then((response) => {
+                        return response.json();
+                    }).then((data) => {
+                        accountNumber.value = data.account_number;
+                        paymentMethod.value = data.payment_method;
+                    })
+
+                } catch (error) {
+
+                }
+            });
+
+
+
+        })
+    </script>
 @endsection

@@ -177,7 +177,7 @@ class AffiliateProductController extends Controller
             'admin_id' => auth()->guard('admin')->user()->id,
         ]);
 
-
+        $product->affiliatecountries()->detach();
         foreach ($request->country as $index => $countryId) {
             $product->affiliatecountries()->attach($countryId, ['stock' => $request->stock[$index]]);
         }
@@ -210,14 +210,14 @@ class AffiliateProductController extends Controller
         // Now you can use the $selectedCountry variable to filter your products
         $products = AffiliateProduct::whereHas('affiliatecountries', function ($query) use ($country) {
             $query->where('country_id', $country);
-        })->get();
+        })->orderBy('id', 'DESC')->paginate(COUNT);
         $countries = Country::all();
         return view('admin.affiliateproduct.index', compact('products', 'countries'));
     }
 
     public function new_product()
     {
-        $products = AffiliateProduct::desc()->get();
+        $products = AffiliateProduct::orderBy('id', 'DESC')->paginate(COUNT);
         $countries = Country::all();
         return view('admin.affiliateproduct.index', compact('products', 'countries'));
     }

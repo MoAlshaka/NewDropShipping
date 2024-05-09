@@ -179,5 +179,12 @@ return [
     'StartDate' => 'تاريخ البداية',
     'CreateOffer' => 'إنشاء عرض',
     'EditOffer' => 'تحرير العرض',
+    'Transactions' => 'التحويلات',
+    'Transaction' => 'التحويل',
+    'Amount' => 'المبلغ',
+    'CreateTransaction' => 'إنشاء تحويل',
+    'SelectSeller' => 'اختر البائع',
+    'AllTransaction' => 'كل التحويلات',
+    'DateTransaction' => 'تاريخ التحويل',
 
 ];

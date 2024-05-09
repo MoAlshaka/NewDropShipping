@@ -54,10 +54,10 @@
                         <form class="flex flex-col gap-6" action="{{ route('transactions.store') }}" method="post">
                             @csrf
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="select2Basic">{{ __('site.Sellers') }}</label>
+                                <label class="col-sm-2 col-form-label" for="sellerId">{{ __('site.Sellers') }}</label>
                                 <div class="col-sm-10">
-                                    <select id="select2Basic" class="select2 form-select form-select-lg"
-                                        data-allow-clear="true" name="seller_id">
+                                    <select id="sellerId" class="form-select form-select-lg" data-allow-clear="true"
+                                        name="seller_id">
                                         <option value="">{{ __('site.SelectSeller') }}</option>
                                         @foreach ($sellers as $seller)
                                             <option value="{{ $seller->id }}">
@@ -76,7 +76,7 @@
                                 <label class="col-sm-2 col-form-label" for="basic-default-name">
                                     {{ __('site.PaymentMethod') }}</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="basic-default-name" name="payment_method"
+                                    <input type="text" class="form-control" id="paymentMethod" name="payment_method"
                                         placeholder="{{ __('site.PaymentMethod') }}" />
                                 </div>
                                 @error('payment_method')
@@ -88,7 +88,7 @@
                                 <label class="col-sm-2 col-form-label" for="basic-default-name">
                                     {{ __('site.AccountNumber') }}</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="basic-default-name" name="account_number"
+                                    <input type="text" class="form-control" id="accountNumber" name="account_number"
                                         placeholder="{{ __('site.AccountNumber') }}" />
                                 </div>
                                 @error('account_number')
@@ -173,4 +173,31 @@
     <!-- Page JS -->
     <script src="{{ asset('assets/js/app-logistics-dashboard.js') }}"></script>
     <script src="{{ asset('assets/js/forms-selects.js') }}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const sellerOptionId = document.getElementById('sellerId');
+            const accountNumber = document.getElementById('accountNumber');
+            const paymentMethod = document.getElementById('paymentMethod');
+
+            sellerOptionId.addEventListener('change', function() {
+                const sellerId = this.value;
+                console.log(sellerId);
+                // document.getElementById('price').value = sellerId;
+                try {
+                    fetch(`/admin/transaction/seller/${sellerId}`).then((response) => {
+                        return response.json();
+                    }).then((data) => {
+                        accountNumber.value = data.account_number;
+                        paymentMethod.value = data.payment_method;
+                    })
+
+                } catch (error) {
+
+                }
+            });
+
+
+
+        })
+    </script>
 @endsection

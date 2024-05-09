@@ -46,6 +46,7 @@ Route::group(['middleware' => ['lang']], function () {
         Route::resource('offers', OfferController::class);
         //transactions
         Route::resource('transactions', TransactionController::class);
+        Route::get('transaction/seller/{id}', [TransactionController::class, 'get_seller_info'])->name('admin.seller.info');
         // products
         Route::resource('shared-products', SharedProductController::class);
         Route::match(['post', 'put', 'patch'], 'shared-products/{id}', [SharedProductController::class, 'update'])->name('admin.sharedproducts.update');

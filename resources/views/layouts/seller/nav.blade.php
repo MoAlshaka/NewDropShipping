@@ -63,7 +63,7 @@
                         <ul class="list-group list-group-flush">
                             @foreach (auth()->guard('seller')->user()->unreadNotifications as $notification)
                                 <li class="list-group-item list-group-item-action dropdown-notifications-item">
-                                    <a href="{{ route('seller.transactions.show', $notification->id) }}"
+                                    <a href="{{ route('seller.notification', $notification->id) }}"
                                         class="d-flex gap-2">
                                         <div class="d-flex flex-column flex-grow-1 overflow-hidden w-px-200">
                                             <h6 class="mb-1 text-truncate">Transaction </h6>
@@ -83,8 +83,9 @@
                         </ul>
                     </li>
                     <li class="dropdown-menu-footer border-top p-2">
-                        <a href="javascript:void(0);" class="btn btn-primary d-flex justify-content-center">
-                            View all notifications
+                        <a href="{{ route('seller.notification.read.all') }}"
+                            class="btn btn-primary d-flex justify-content-center">
+                            Mark All As Read
                         </a>
                     </li>
                 </ul>

@@ -16,11 +16,25 @@ class TransactionController extends Controller
         return view('seller.transactions.index', compact('transactions'));
     }
 
-    public function show($id)
+
+
+    public function notification($id)
     {
+        $notification = DB::table('notifications')->where('id', $id)->first();
         DB::table('notifications')->where('id', $id)->update([
             'read_at' => now(),
         ]);
-        return redirect()->route('seller.transactions.index');
+
+        return view('seller.transactions.notification', compact('notification'));
+    }
+
+    public function read_all()
+    {
+        $seller = auth()->guard('seller')->user();
+
+        foreach ($seller->unreadNotifications  as $notification) {
+            $notification->markAsRead();
+        }
+        return redirect()->back();
     }
 }

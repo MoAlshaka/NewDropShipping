@@ -146,7 +146,7 @@
         </li>
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons mdi mdi-earth"></i>
+                <i class="menu-icon tf-icons mdi mdi-sale-outline"></i>
                 <div> {{ __('site.Offers') }}</div>
             </a>
             <ul class="menu-sub">
@@ -164,7 +164,7 @@
         </li>
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons mdi mdi-earth"></i>
+                <i class="menu-icon tf-icons mdi mdi-cash-multiple"></i>
                 <div> {{ __('site.Transaction') }}</div>
             </a>
             <ul class="menu-sub">

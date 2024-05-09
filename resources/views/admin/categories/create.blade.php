@@ -30,7 +30,7 @@
                                     for="basic-default-name">{{ __('site.CategoryName') }}</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="basic-default-name" name="name"
-                                        placeholder="Category Name" />
+                                        placeholder="{{ __('site.CategoryName') }}" />
                                 </div>
                             </div>
                             @error('name')

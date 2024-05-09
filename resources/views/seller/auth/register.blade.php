@@ -363,14 +363,14 @@
                                     <div class="row g-3">
                                         <div class="col-sm-12">
                                             <div class="form-floating form-floating-outline">
-                                                <select id="multiStepsState" class="select2 form-select"
+                                                <select id="payment_method" class="select2 form-select"
                                                     data-allow-clear="true" name="payment_method">
                                                     <option value="">Select</option>
                                                     <option value="Visa">Visa</option>
                                                     <option value="InstPay">InstPay</option>
                                                     <option value="Vodafone Cash">Vodafone Cash</option>
                                                 </select>
-                                                <label for="multiStepsState"> {{ __('site.PaymentMethod') }}</label>
+                                                <label for="payment_method"> {{ __('site.PaymentMethod') }}</label>
                                             </div>
                                             @error('payment_method')
                                                 <div
@@ -380,19 +380,33 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                        <div class="col-md-12">
+                                        {{-- <div class="col-md-12">
                                             <div class="input-group input-group-merge">
                                                 <div class="form-floating form-floating-outline">
-                                                    <input id="multiStepsCard" class="form-control multi-steps-card"
+                                                    <input id="AccountNumber" class="form-control multi-steps-card"
                                                         name="account_number" type="text"
                                                         placeholder="1356 3215 6548 7898"
                                                         aria-describedby="Account Number"
                                                         value="{{ old('account_number') }}" />
-                                                    <label for="multiStepsCard">
+                                                    <label for="AccountNumber">
                                                         {{ __('site.AccountNumber') }}</label>
                                                 </div>
-                                                <span class="input-group-text cursor-pointer"
-                                                    id="multiStepsCardImg"><span class="card-type"></span></span>
+                                            </div>
+                                            @error('account_number')
+                                                <div
+                                                    class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                                                    <div data-field="multiStepsUsername" data-validator="notEmpty">
+                                                        {{ $message }} </div>
+                                                </div>
+                                            @enderror
+                                        </div> --}}
+                                        <div class="col-sm-12">
+                                            <div class="form-floating form-floating-outline">
+                                                <input type="text" name="account_number" id="account_number"
+                                                    class="form-control" placeholder="{{ __('site.AccountNumber') }}"
+                                                    aria-label="account_number"
+                                                    value="{{ old('account_number') }}" />
+                                                <label for="account_number"> {{ __('site.AccountNumber') }}</label>
                                             </div>
                                             @error('account_number')
                                                 <div

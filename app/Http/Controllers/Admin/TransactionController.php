@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Seller;
 use App\Models\Transaction;
-use App\Notifications\CreateTransaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Notifications\CreateTransaction;
 
 class TransactionController extends Controller
 {
@@ -110,7 +111,13 @@ class TransactionController extends Controller
 
     public function get_seller_info($id)
     {
-        $data = Seller::where("id", $id)->pluck("payment_method", "account_number");
-        return json_encode($data);
+
+        $result = Seller::where('id', $id)->first();
+        $data = [];
+        $data['payment_method'] = $result->payment_method;
+        $data['account_number'] = $result->account_number;
+
+
+        return response()->json($data);
     }
 }

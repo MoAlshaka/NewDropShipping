@@ -125,7 +125,7 @@
         </li>
         <li class="menu-item">
             <a href="{{ route('seller.transactions.index') }}" class="menu-link ">
-                <i class="menu-icon tf-icons mdi mdi-account-group-outline"></i>
+                <i class="menu-icon tf-icons mdi mdi-cash-multiple"></i>
                 <div> {{ __('site.Transactions') }}</div>
             </a>
         </li>

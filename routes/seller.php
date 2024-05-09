@@ -69,7 +69,8 @@ Route::group(['middleware' => ['lang']], function () {
             Route::match(['post', 'put', 'patch'], 'update-password/{id}', [ProfileController::class, 'change_password'])->name('seller.change.password');
             //transaction
             Route::get('transactions', [TransactionController::class, 'index'])->name('seller.transactions.index');
-            Route::get('transaction/{id}', [TransactionController::class, 'show'])->name('seller.transactions.show');
+            Route::get('notification/{id}', [TransactionController::class, 'notification'])->name('seller.notification');
+            Route::get('notifications/read-all', [TransactionController::class, 'read_all'])->name('seller.notification.read.all');
             // error
             Route::fallback([ErrorController::class, 'error'])->name('admin.error');
         });

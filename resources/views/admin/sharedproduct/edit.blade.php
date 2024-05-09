@@ -2,7 +2,7 @@
 
 
 @section('title')
-    {{ __('site.CreateSharedProduct') }}
+    {{ __('site.EditSharedProduct') }}
 @endsection
 
 
@@ -162,31 +162,36 @@
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div id="stock_container" data-country="{{ $countries }}">
-                                <div class="row mb-4 mt-4">
-                                    <div class="col">
-                                        <div class="form-floating form-floating-outline">
-                                            <select class="form-select form-select-lg country" name="country[]">
-                                                <option value=""> {{ __('site.SelectCountry') }}</option>
-                                                @foreach ($countries as $country)
-                                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            <label for="country"> {{ __('site.Country') }}</label>
+                            @foreach ($product->sharedcountries as $sharedCountry)
+                                <div id="stock_container" data-country="{{ $countries }}">
+                                    <div class="row mb-4 mt-4">
+                                        <div class="col">
+                                            <div class="form-floating form-floating-outline">
+                                                <select class="form-select form-select-lg country" name="country[]">
+                                                    <option value="{{ $sharedCountry->pivot->country_id }}">
+                                                        {{ $sharedCountry->name }}</option>
+                                                    @foreach ($countries as $country)
+                                                        <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                                    @endforeach
+                                                    <!-- Accessing the name of the country via pivot -->
+                                                </select>
+                                                <label for="country"> {{ __('site.Country') }}</label>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-floating form-floating-outline mb-4">
-                                            <input type="number" class="form-control" id="Stock"
-                                                placeholder="Stock" name="stock[]"
-                                                aria-label="Product discounted price" />
-                                            <label for="Stock"> {{ __('site.Stock') }}</label>
+                                        <div class="col">
+                                            <div class="form-floating form-floating-outline mb-4">
+                                                <input type="number" class="form-control" id="Stock"
+                                                    placeholder="Stock" name="stock[]"
+                                                    aria-label="Product discounted price"
+                                                    value="{{ $sharedCountry->pivot->stock }}" />
+                                                <label for="Stock"> {{ __('site.Stock') }}</label>
+                                            </div>
                                         </div>
-
                                     </div>
                                 </div>
+                            @endforeach
 
-                            </div>
+
                             <button id="addstock" class="btn rounded-pill btn-outline-primary waves-effect">
                                 {{ __('site.Add') }}</button>
                         </div>
@@ -306,6 +311,6 @@
 
     <!-- Page JS -->
     <script src="{{ asset('assets/js/app-ecommerce-product-add.js') }}"></script>
-    <script src="{{ asset('assets/addProduct/sharedProduct.js') }}"></script>
+    <script src="{{ asset('assets/addProduct/sharedProductEdit.js') }}"></script>
     <script src="{{ asset('assets/productjs/stock.js') }}"></script>
 @endsection
