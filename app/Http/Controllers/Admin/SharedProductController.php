@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Category;
 use App\Models\Country;
-use App\Models\SharedProduct;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\SharedProduct;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
 class SharedProductController extends Controller
@@ -17,8 +18,9 @@ class SharedProductController extends Controller
     public function index()
     {
         $countries = Country::all();
+        $categories = Category::all();
         $products = SharedProduct::orderBy('id', 'DESC')->paginate(COUNT);
-        return view('admin.sharedproduct.index', compact('products', 'countries'));
+        return view('admin.sharedproduct.index', compact('products', 'countries', 'categories'));
     }
 
     /**
@@ -217,12 +219,33 @@ class SharedProductController extends Controller
             $query->where('country_id', $country);
         })->orderBy('id', 'DESC')->paginate(COUNT);
         $countries = Country::all();
-        return view('admin.sharedproduct.index', compact('products', 'countries'));
+        $categories = Category::all();
+        return view('admin.sharedproduct.index', compact('products', 'countries', 'categories'));
     }
     public function new_product()
     {
-        $products = SharedProduct::desc()->get();
+        $products = SharedProduct::orderBy('id', 'DESC')->paginate(COUNT);
         $countries = Country::all();
-        return view('admin.sharedproduct.index', compact('products', 'countries'));
+        $categories = Category::all();
+        return view('admin.sharedproduct.index', compact('products', 'countries', 'categories'));
+    }
+    public function suggested_product()
+    {
+        $shared_products = DB::table('shared_product_seller')->pluck('shared_product_id')->toArray();
+        $products = SharedProduct::whereIn('id', $shared_products)->orderBy('id', 'DESC')->paginate(COUNT);
+        $countries = Country::all();
+        $categories = Category::all();
+
+        return view('admin.sharedproduct.index', compact('products', 'countries', 'categories'));
+    }
+    public function search(Request $request)
+    {
+        $products = SharedProduct::where('title', 'like', '%' . $request->title . '%')
+            ->orWhere('sku', 'like', '%' . $request->title . '%')
+            ->orWhere('category_id', $request->category_id)
+            ->orderBy('id', 'DESC')->paginate(COUNT);
+        $countries = Country::all();
+        $categories = Category::all();
+        return view('admin.sharedproduct.index', compact('products', 'countries', 'categories'));
     }
 }

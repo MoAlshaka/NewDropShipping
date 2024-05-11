@@ -50,8 +50,17 @@ Route::group(['middleware' => ['lang']], function () {
         // products
         Route::resource('shared-products', SharedProductController::class);
         Route::match(['post', 'put', 'patch'], 'shared-products/{id}', [SharedProductController::class, 'update'])->name('admin.sharedproducts.update');
+        Route::get('/shared-product/new-products', [SharedProductController::class, 'new_product'])->name('admin.new.shared.product');
+        Route::get('/shared-product/suggested-products', [SharedProductController::class, 'suggested_product'])->name('admin.suggested.shared.product');
+        Route::post('/shared-product/search', [SharedProductController::class, 'search'])->name('admin.search.shared.product');
+
+        //
         Route::resource('affiliate-products', AffiliateProductController::class);
         Route::match(['post', 'put', 'patch'], 'affiliate-products/{id}', [AffiliateProductController::class, 'update'])->name('admin.affiliateproducts.update');
+        Route::get('/affiliate-product/new-products', [AffiliateProductController::class, 'new_product'])->name('admin.new.affiliate.product');
+        Route::get('/affiliate-product/suggested-products', [AffiliateProductController::class, 'suggested_product'])->name('admin.suggested.affiliate.product');
+        Route::get('/affiliate-product/search', [AffiliateProductController::class, 'search'])->name('admin.search.affiliate.product');
+
         //
         Route::get('filter/shared-products/{country}', [SharedProductController::class, 'country_filter'])->name('admin.shared.country.filter');
         Route::get('filter/affiliate-products/{country}', [AffiliateProductController::class, 'country_filter'])->name('admin.affiliate.country.filter');

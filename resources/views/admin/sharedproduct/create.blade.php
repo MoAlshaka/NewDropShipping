@@ -246,7 +246,7 @@
                             <div class="mb-4 col ecommerce-select2-dropdown">
                                 <div class="form-floating form-floating-outline w-100 me-3">
                                     <select id="category-org" class="select2 form-select" name="category_id"
-                                        data-placeholder="Select Category">
+                                        data-placeholder="{{ __('site.SelectCategory') }}">
                                         <option value=""> {{ __('site.SelectCategory') }}</option>
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
