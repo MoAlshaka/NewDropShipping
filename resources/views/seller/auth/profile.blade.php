@@ -158,11 +158,13 @@
                                     <div class="form-floating form-floating-outline">
                                         <select id="multiStepsState" class="select2 form-select" data-allow-clear="true"
                                             name="payment_method">
-                                            <option value="{{ Auth::guard('seller')->user()->payment_method }}">
-                                                {{ Auth::guard('seller')->user()->payment_method }}</option>
-                                            <option value="Visa">Visa</option>
-                                            <option value="InstPay">InstPay</option>
-                                            <option value="Vodafone Cash">Vodafone Cash</option>
+
+                                            <option value="Visa" @if (Auth::guard('seller')->user()->payment_method == 'Visa') selected @endif>Visa
+                                            </option>
+                                            <option value="InstPay" @if (Auth::guard('seller')->user()->payment_method == 'InstPay') selected @endif>
+                                                InstPay</option>
+                                            <option value="Vodafone Cash"
+                                                @if (Auth::guard('seller')->user()->payment_method == 'Vodafone Cash') selected @endif>Vodafone Cash</option>
                                         </select>
                                         <label for="payment_method"> {{ __('site.PaymentMethod') }}</label>
                                     </div>

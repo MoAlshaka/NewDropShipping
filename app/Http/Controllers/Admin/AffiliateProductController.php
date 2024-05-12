@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\AffiliateProduct;
-use App\Models\Category;
 use App\Models\Country;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\AffiliateProduct;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
 class AffiliateProductController extends Controller
@@ -17,8 +18,9 @@ class AffiliateProductController extends Controller
     public function index()
     {
         $countries = Country::all();
+        $categories = Category::all();
         $products = AffiliateProduct::orderBy('id', 'DESC')->paginate(COUNT);
-        return view('admin.affiliateproduct.index', compact('products', 'countries'));
+        return view('admin.affiliateproduct.index', compact('products', 'countries', 'categories'));
     }
 
     /**
@@ -212,13 +214,49 @@ class AffiliateProductController extends Controller
             $query->where('country_id', $country);
         })->orderBy('id', 'DESC')->paginate(COUNT);
         $countries = Country::all();
-        return view('admin.affiliateproduct.index', compact('products', 'countries'));
+        $categories = Category::all();
+        return view('admin.affiliateproduct.index', compact('products', 'countries', 'categories'));
     }
 
     public function new_product()
     {
         $products = AffiliateProduct::orderBy('id', 'DESC')->paginate(COUNT);
         $countries = Country::all();
-        return view('admin.affiliateproduct.index', compact('products', 'countries'));
+        $categories = Category::all();
+        return view('admin.affiliateproduct.index', compact('products', 'countries', 'categories'));
+    }
+
+    public function suggested_product()
+    {
+        $affiliate_products = DB::table('affiliate_product_seller')->pluck('affiliate_product_id')->toArray();
+
+        $products = AffiliateProduct::whereIn('id', $affiliate_products)->orderBy('id', 'DESC')->paginate(COUNT);
+        $countries = Country::all();
+        $categories = Category::all();
+        return view('admin.affiliateproduct.index', compact('products', 'countries', 'categories'));
+    }
+
+    public function search(Request $request)
+    {
+
+        $query = AffiliateProduct::query();
+
+        if ($request->has('title') && $request->title != '') {
+            $query->where('title', 'like', '%' . $request->title . '%');
+        }
+
+        if ($request->has('sku') && $request->sku != '') {
+            $query->orWhere('sku', 'like', '%' . $request->sku . '%');
+        }
+
+        if ($request->has('category_id') && $request->category_id != '') {
+            $query->orWhere('category_id', $request->category_id);
+        }
+
+        $products = $query->orderBy('id', 'DESC')->paginate(COUNT);// Replace 10 with your desired number of items per page
+
+        $countries = Country::all();
+        $categories = Category::all();
+        return view('admin.affiliateproduct.index', compact('products', 'countries', 'categories'));
     }
 }

@@ -7,7 +7,15 @@
 
 
 @section('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-c5dyc+3ht10w+7s6OfBxHwZZkm5A+qLmLaB+pa3RFsKcOCme7/uBv2mtUfFjS+2b2q5j//BXJsW0sB2EhfaR6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{ asset('assets/css/product.css') }}" />
+    <style>
+        .accordion-button {
+            width: 0% !important;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -31,6 +39,70 @@
             <div class="alert alert-warning" role="alert">{{ session()->get('Warning') }}</div>
         @endif
         <div class="flex flex-col gap-6">
+            <div class="col-md mb-4 mb-md-2">
+                <div class="accordion mt-3" id="accordionWithIcon">
+                    <div class="accordion-item">
+
+                        <div class=" d-flex align-items-center">
+
+                            <div class=" h-full flex flex-fill gap-6">
+                                <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
+                                    href="{{ route('affiliate-products.index') }}">
+                                    <i class="mdi mdi-select-all"></i>
+                                    {{ __('site.AllProducts') }}
+                                </a>
+                                <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
+                                    href="{{ route('admin.new.affiliate.product') }}">
+                                    <i class="mdi mdi-new-box"></i>
+                                    {{ __('site.NewProducts') }}
+                                </a>
+                                <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
+                                    href="{{ route('admin.suggested.affiliate.product') }}">
+                                    <i class="mdi mdi-rocket-launch-outline"></i>
+                                    {{ __('site.SuggestedProducts') }}
+                                </a>
+
+
+                            </div>
+                            <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse"
+                                data-bs-target="#accordionWithIcon-1" aria-expanded="false">
+                            </button>
+                        </div>
+
+                        <div id="accordionWithIcon-1" class="accordion-collapse collapse" style="">
+                            <div class="accordion-body">
+                                <form id="formAuthentication" class="mb-3 row"
+                                    action="{{ route('admin.search.affiliate.product') }}" method="post">
+                                    @csrf
+                                    <div class="form-floating form-floating-outline mb-3 col ">
+                                        <input type="text" class="form-control" id="title" name="title"
+                                            placeholder="Enter your product title" autofocus />
+                                        <label for="title"> {{ __('site.Title') }}</label>
+                                    </div>
+                                    <div class="form-floating form-floating-outline mb-3 col">
+                                        <input type="text" class="form-control" id="sku" name="sku"
+                                            placeholder="Enter your product sku" autofocus />
+                                        <label for="sku"> {{ __('site.SKU') }}</label>
+                                    </div>
+                                    <div class="form-floating form-floating-outline mb-3 col">
+                                        <select class="form-select form-select-lg country" name="category_id">
+                                            <option value="">{{ __('site.SelectCategory') }}</option>
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <label for="country"> {{ __('site.Category') }}</label>
+                                    </div>
+                                    <button class="btn btn-primary mb-3 col" type="submit">
+                                        {{ __('site.Search') }}</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
             <div class="bg-white drop-shadow h-full p-4 rounded-md flex gap-6">
                 <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
                     href="{{ route('affiliate-products.index') }}">

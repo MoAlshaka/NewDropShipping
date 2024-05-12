@@ -57,7 +57,7 @@ Route::group(['middleware' => ['lang']], function () {
             Route::get('/affiliate-products/filter/{country}', [AffiliateProductController::class, 'country_filter'])->name('affiliate.country.filter');
             Route::get('/affiliate-products/new-products', [AffiliateProductController::class, 'new_product'])->name('new.affiliate.product');
             Route::get('/affiliate-products/suggested-products', [AffiliateProductController::class, 'suggested_product'])->name('suggested.affiliate.product');
-            Route::get('/affiliate-products/search', [AffiliateProductController::class, 'search'])->name('search.affiliate.product');
+            Route::post('/affiliate-products/search', [AffiliateProductController::class, 'search'])->name('search.affiliate.product');
             //imported product
             Route::get('import-products', [ImportProductController::class, 'imported_products'])->name('seller.products.imported');
             //leads

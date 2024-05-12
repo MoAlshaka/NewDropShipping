@@ -103,10 +103,22 @@ class SharedProductController extends Controller
     }
     public function search(Request $request)
     {
-        $products = SharedProduct::where('title', 'like', '%' . $request->title . '%')
-            ->orWhere('sku', 'like', '%' . $request->title . '%')
-            ->orWhere('category_id', $request->category_id)
-            ->orderBy('id', 'DESC')->paginate(PAGINATION_COUNT);
+        $query = SharedProduct::query();
+
+        if ($request->has('title') && $request->title != '') {
+            $query->where('title', 'like', '%' . $request->title . '%');
+        }
+
+        if ($request->has('sku') && $request->sku != '') {
+            $query->orWhere('sku', 'like', '%' . $request->sku . '%');
+        }
+
+        if ($request->has('category_id') && $request->category_id != '') {
+            $query->orWhere('category_id', $request->category_id);
+        }
+
+        $products = $query->orderBy('id', 'DESC')->paginate(COUNT);// Replace 10 with your desired number of items per page
+
         $countries = Country::all();
         $categories = Category::all();
         return view('seller.sharedproduct.index', compact('products', 'countries', 'categories'));
