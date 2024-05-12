@@ -59,7 +59,11 @@ Route::group(['middleware' => ['lang']], function () {
         Route::match(['post', 'put', 'patch'], 'affiliate-products/{id}', [AffiliateProductController::class, 'update'])->name('admin.affiliateproducts.update');
         Route::get('/affiliate-product/new-products', [AffiliateProductController::class, 'new_product'])->name('admin.new.affiliate.product');
         Route::get('/affiliate-product/suggested-products', [AffiliateProductController::class, 'suggested_product'])->name('admin.suggested.affiliate.product');
+<<<<<<< HEAD
         Route::post('/affiliate-product/search', [AffiliateProductController::class, 'search'])->name('admin.search.affiliate.product');
+=======
+        Route::get('/affiliate-product/search', [AffiliateProductController::class, 'search'])->name('admin.search.affiliate.product');
+>>>>>>> 2b8ad119ba4f8802d08ac4499b26c490b78df05f
 
         //
         Route::get('filter/shared-products/{country}', [SharedProductController::class, 'country_filter'])->name('admin.shared.country.filter');

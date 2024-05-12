@@ -238,6 +238,7 @@ class AffiliateProductController extends Controller
 
     public function search(Request $request)
     {
+<<<<<<< HEAD
 
         $query = AffiliateProduct::query();
 
@@ -255,6 +256,12 @@ class AffiliateProductController extends Controller
 
         $products = $query->orderBy('id', 'DESC')->paginate(COUNT);// Replace 10 with your desired number of items per page
 
+=======
+        $products = AffiliateProduct::where('title', 'like', '%' . $request->title . '%')
+            ->orWhere('sku', 'like', '%' . $request->title . '%')
+            ->orWhere('category_id', $request->category_id)
+            ->orderBy('id', 'DESC')->paginate(COUNT);
+>>>>>>> 2b8ad119ba4f8802d08ac4499b26c490b78df05f
         $countries = Country::all();
         $categories = Category::all();
         return view('admin.affiliateproduct.index', compact('products', 'countries', 'categories'));
